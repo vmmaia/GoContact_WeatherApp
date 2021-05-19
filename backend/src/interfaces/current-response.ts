@@ -4,6 +4,8 @@ interface CurrentResponse {
   time: string;
   temperature: number;
   is_day: number;
+  sunrise: string;
+  sunset: string;
 }
 
 export default CurrentResponse;

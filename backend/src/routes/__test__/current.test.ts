@@ -105,7 +105,9 @@ describe('Current route test cases', () => {
         details: expect.any(String),
         time: expect.any(String),
         temperature: expect.any(Number),
-        is_day: expect.any(Number)
+        is_day: expect.any(Number),
+        sunset: expect.any(String),
+        sunrise: expect.any(String)
       })
     );
   });

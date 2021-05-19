@@ -1,11 +1,13 @@
 import express, { Request, Response } from 'express';
 import { body } from 'express-validator';
 import axios from 'axios';
+import getFormattedDate from '../utils/date';
 import validateRequestMiddleware from '../middlewares/validate-request';
 import APIError from '../errors/api-error';
 
-import CurrentResponse from '../interfaces/current-response';
-import APIResponseFormat from '../interfaces/external-api/current-weather-response';
+import ResponseFormat from '../interfaces/current-response';
+import CurrentResponseFormat from '../interfaces/external-api/current-weather-response';
+import AstroResponseFormat from '../interfaces/external-api/astronomy-response';
 
 import { weather_api_key } from '../config.json';
 
@@ -21,19 +23,28 @@ router.post(
   ],
   validateRequestMiddleware,
   async (req: Request, res: Response) => {
-    const apiurl = `http://api.weatherapi.com/v1/current.json?key=${weather_api_key}&q=${req.body.query}&aqi=no`;
+    const currentURL = `http://api.weatherapi.com/v1/current.json?key=${weather_api_key}&q=${req.body.query}&aqi=no`;
+    const astronomyURL = `http://api.weatherapi.com/v1/astronomy.json?key=${weather_api_key}&q=${
+      req.body.query
+    }&dt=${getFormattedDate()}`;
 
     try {
-      const apiResponse = await axios.get(apiurl);
+      const [responseCurrent, responseAstro] = await axios.all([
+        axios.get(currentURL),
+        axios.get(astronomyURL)
+      ]);
 
-      const data: APIResponseFormat = apiResponse.data;
+      const currentData: CurrentResponseFormat = responseCurrent.data;
+      const astroData: AstroResponseFormat = responseAstro.data;
 
-      const response: CurrentResponse = {
-        name: data.location.name,
-        details: `${data.location.region}, ${data.location.country}`,
-        time: data.location.localtime!.split(' ')[1] || '00:00',
-        temperature: data.current.temp_c,
-        is_day: data.current.is_day
+      const response: ResponseFormat = {
+        name: currentData.location.name,
+        details: `${currentData.location.region}, ${currentData.location.country}`,
+        time: currentData.location.localtime!.split(' ')[1] || '00:00',
+        temperature: currentData.current.temp_c,
+        is_day: currentData.current.is_day,
+        sunrise: astroData.astronomy.astro.sunrise,
+        sunset: astroData.astronomy.astro.sunset
       };
 
       res.send(response);
