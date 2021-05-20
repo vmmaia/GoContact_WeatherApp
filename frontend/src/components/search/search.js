@@ -1,10 +1,6 @@
 import ResultList from './result-list';
 import { connect } from 'react-redux';
-import {
-  search,
-  resetSearch,
-  toggleResults
-} from '../../redux/actions/search-actions';
+import { search, resetSearch } from '../../redux/actions/search-actions';
 
 import './search.css';
 
@@ -27,16 +23,6 @@ const Search = (props) => {
     }, 750);
   };
 
-  const handleLoseFocus = () => {
-    props.toggleResults(false);
-  };
-
-  const handleGainFocus = (event) => {
-    if (event.target.value !== '') {
-      props.toggleResults(true);
-    }
-  };
-
   const searchItem = (counter, value) => {
     if (counter === searchCounter) {
       props.search(value);
@@ -54,8 +40,6 @@ const Search = (props) => {
         type="text"
         placeholder="Find the weather in your city"
         onChange={handleSearchItem}
-        onBlur={handleLoseFocus}
-        onFocus={handleGainFocus}
       />
       <i className="fa fa-search search-icon" aria-hidden="true"></i>
 
@@ -70,6 +54,5 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   search,
-  resetSearch,
-  toggleResults
+  resetSearch
 })(Search);

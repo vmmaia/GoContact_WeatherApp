@@ -1,6 +1,7 @@
+// SEARCH
 export const SEARCH = 'SEARCH';
 export const SEARCH_RESET = 'SEARCH_RESET';
-export const SEARCH_TOGGLE_RESULTS = 'SEARCH_TOGGLE_RESULTS';
-export const SEARCH_RESULTS = 'SEARCH_RESULTS';
+
+// CURRENT
 export const RETRIEVE_CITY = 'RETRIEVE_CITY';
-export const ADD_CITY = 'ADD_CITY';
+export const REMOVE_CITY = 'REMOVE_CITY';
