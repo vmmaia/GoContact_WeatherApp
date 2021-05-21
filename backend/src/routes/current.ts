@@ -40,11 +40,21 @@ router.post(
       const response: ResponseFormat = {
         name: currentData.location.name,
         details: `${currentData.location.region}, ${currentData.location.country}`,
-        time: currentData.location.localtime!.split(' ')[1] || '00:00',
+        time: new Date(currentData.location.localtime!).getTime() || 0,
         temperature: currentData.current.temp_c,
         is_day: currentData.current.is_day,
+        weather: currentData.current.condition.text,
+        weather_icon: currentData.current.condition.icon.split('/').pop()!,
         sunrise: astroData.astronomy.astro.sunrise,
-        sunset: astroData.astronomy.astro.sunset
+        sunrise_epoch:
+          new Date(
+            `${getFormattedDate()} ${astroData.astronomy.astro.sunrise}`
+          ).getTime() || 0,
+        sunset: astroData.astronomy.astro.sunset,
+        sunset_epoch:
+          new Date(
+            `${getFormattedDate()} ${astroData.astronomy.astro.sunset}`
+          ).getTime() || 0
       };
 
       res.send(response);

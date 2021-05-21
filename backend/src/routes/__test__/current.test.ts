@@ -103,11 +103,15 @@ describe('Current route test cases', () => {
       expect.objectContaining({
         name: expect.any(String),
         details: expect.any(String),
-        time: expect.any(String),
+        time: expect.any(Number),
         temperature: expect.any(Number),
         is_day: expect.any(Number),
+        weather: expect.any(String),
+        weather_icon: expect.any(String),
         sunset: expect.any(String),
-        sunrise: expect.any(String)
+        sunset_epoch: expect.any(Number),
+        sunrise: expect.any(String),
+        sunrise_epoch: expect.any(Number)
       })
     );
   });
