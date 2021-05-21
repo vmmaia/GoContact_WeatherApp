@@ -17,6 +17,11 @@ export const retrieveCity = (query) => async (dispatch) => {
         city: { ...response.data }
       }
     });
+
+    dispatch({
+      type: TABLE_SORT_BY,
+      payload: {}
+    });
   } catch (err) {
     console.log(serializeErrors(err));
   } finally {

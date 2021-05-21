@@ -1,10 +1,11 @@
 .weather-card {
-  width: 240px;
+  width: calc(240px - 10px);
 
   display: flex;
   flex-direction: column;
 
   padding: 5px;
+  margin: 0px 5px;
 
   border: 1px solid #ababab;
   border-radius: 10px;
@@ -85,7 +86,7 @@
 
 @media screen and (max-width: 1024px) {
   .weather-card {
-    width: calc(100% - 12px);
+    width: calc(100% - 12px - 10px);
 
     flex-direction: row;
     justify-content: space-around;

@@ -1,9 +1,12 @@
 .graph-wrapper {
-  width: 50%;
+  margin-top: 25px;
+  padding: 10px;
+
+  width: calc(50% - 20px);
 }
 
 @media screen and (max-width: 1024px) {
   .graph-wrapper {
-    width: 100%;
+    width: calc(100% - 20px);
   }
 }

@@ -16,6 +16,9 @@ const initialState = {
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case RETRIEVE_CITY: {
+      if (state.cities.find((city) => city.name === action.payload.city.name))
+        return { ...state };
+
       return {
         ...state,
         cities: [...state.cities, action.payload.city],
