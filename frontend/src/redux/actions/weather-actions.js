@@ -1,4 +1,9 @@
-import { RETRIEVE_CITY, SEARCH_RESET } from './action-types';
+import {
+  RETRIEVE_CITY,
+  SEARCH_RESET,
+  UPDATE_TIME,
+  TABLE_SORT_BY
+} from './action-types';
 import serializeErrors from '../../util/serialize-errors';
 import backend from '../../apis/backend';
 
@@ -9,7 +14,7 @@ export const retrieveCity = (query) => async (dispatch) => {
     dispatch({
       type: RETRIEVE_CITY,
       payload: {
-        city: response.data
+        city: { ...response.data }
       }
     });
   } catch (err) {
@@ -20,4 +25,22 @@ export const retrieveCity = (query) => async (dispatch) => {
       payload: {}
     });
   }
+};
+
+export const updateTime = (name) => (dispatch) => {
+  dispatch({
+    type: UPDATE_TIME,
+    payload: {
+      name
+    }
+  });
+};
+
+export const sortTable = (column) => (dispatch) => {
+  dispatch({
+    type: TABLE_SORT_BY,
+    payload: {
+      column
+    }
+  });
 };

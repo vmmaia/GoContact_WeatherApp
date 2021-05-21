@@ -1,5 +1,5 @@
 const serializeErrors = (error) => {
-  let errors = '';
+  let errors = undefined;
 
   if (error.response && error.response.data && error.response.data.errors) {
     const response = error.response.data.errors;

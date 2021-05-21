@@ -1,0 +1,9 @@
+.graph-wrapper {
+  width: 50%;
+}
+
+@media screen and (max-width: 1024px) {
+  .graph-wrapper {
+    width: 100%;
+  }
+}

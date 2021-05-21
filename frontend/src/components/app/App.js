@@ -5,9 +5,9 @@ import './app.css';
 
 import Footer from '../footer/Footer';
 
-import LandingPage from '../../pages/Landing';
-import AboutPage from '../../pages/About';
-import PageNotFound from '../../pages/PageNotFound';
+import LandingPage from '../../pages/landing/Landing';
+import AboutPage from '../../pages/about/About';
+import PageNotFound from '../../pages/pageNotFound/PageNotFound';
 
 const App = (props) => {
   return (

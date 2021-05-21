@@ -1,6 +1,8 @@
+import './graph.css';
+
 const Graph = (props) => {
   return (
-    <div>
+    <div className="graph-wrapper">
       <p>Graph</p>
     </div>
   );

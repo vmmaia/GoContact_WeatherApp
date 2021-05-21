@@ -1,6 +1,10 @@
 import ResultList from './result-list';
 import { connect } from 'react-redux';
-import { search, resetSearch } from '../../redux/actions/search-actions';
+import {
+  search,
+  resetSearch,
+  setQuery
+} from '../../redux/actions/search-actions';
 
 import './search.css';
 
@@ -14,6 +18,8 @@ const Search = (props) => {
       props.resetSearch();
       return;
     }
+
+    props.setQuery(value);
 
     searchCounter++;
     const counter = searchCounter;
@@ -40,6 +46,7 @@ const Search = (props) => {
         type="text"
         placeholder="Find the weather in your city"
         onChange={handleSearchItem}
+        value={props.searchState.query}
       />
       <i className="fa fa-search search-icon" aria-hidden="true"></i>
 
@@ -54,5 +61,6 @@ const mapStateToProps = (state) => {
 
 export default connect(mapStateToProps, {
   search,
-  resetSearch
+  resetSearch,
+  setQuery
 })(Search);

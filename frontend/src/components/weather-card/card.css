@@ -1,0 +1,108 @@
+.weather-card {
+  width: 240px;
+
+  display: flex;
+  flex-direction: column;
+
+  padding: 5px;
+
+  border: 1px solid #ababab;
+  border-radius: 10px;
+
+  box-shadow: 0 2px 5px 1px rgb(64 60 67 / 16%);
+
+  margin-top: 25px;
+
+  animation: card-appear 0.1s linear;
+}
+
+.weather-card-day {
+  background: rgb(255, 200, 85);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 200, 85, 0.5) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+}
+
+.weather-card-night {
+  background: rgb(65, 65, 175);
+  background: linear-gradient(
+    180deg,
+    rgba(65, 65, 175, 0.5) 0%,
+    rgba(255, 255, 255, 0) 50%
+  );
+}
+
+.weather-card > hr {
+  width: 80%;
+}
+
+.weather-card-top-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.weather-card-top-section > span {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+.weather-card-condition {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.weather-card-location-section {
+  text-align: center;
+}
+
+.weather-card-location-section > div:first-child {
+  font-size: 2em;
+  font-weight: bold;
+}
+
+.weather-card-details-section {
+  display: flex;
+  justify-content: space-evenly;
+  align-items: center;
+}
+
+.weather-card-details-section > div {
+  text-align: center;
+}
+
+.weather-card-details-section > div > span:first-child {
+  font-weight: bold;
+}
+
+.weather-card-time-section {
+  margin-top: 20px;
+  text-align: center;
+}
+
+@media screen and (max-width: 1024px) {
+  .weather-card {
+    width: calc(100% - 12px);
+
+    flex-direction: row;
+    justify-content: space-around;
+    flex-wrap: wrap;
+  }
+
+  .weather-card > hr {
+    display: none;
+  }
+}
+
+@keyframes card-appear {
+  0% {
+    opacity: 0;
+    transform: translateY(-50px);
+  }
+
+  100% {
+  }
+}

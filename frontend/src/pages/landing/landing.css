@@ -1,0 +1,14 @@
+.landing-info-container {
+  width: 100%;
+
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 1024px) {
+  .landing-info-container {
+    flex-direction: column;
+  }
+}

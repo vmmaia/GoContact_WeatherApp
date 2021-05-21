@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import { retrieveCity } from '../../redux/actions/info-actions';
+import { retrieveCity } from '../../redux/actions/weather-actions';
 import './search.css';
 
 const ResultItem = (props) => {

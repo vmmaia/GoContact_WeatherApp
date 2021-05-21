@@ -1,4 +1,4 @@
-import { SEARCH, SEARCH_RESET } from './action-types';
+import { SEARCH, SEARCH_RESET, SEARCH_SET_QUERY } from './action-types';
 import serializeErrors from '../../util/serialize-errors';
 import backend from '../../apis/backend';
 
@@ -28,15 +28,21 @@ export const search = (query) => async (dispatch) => {
       }
     });
   } catch (err) {
-    dispatch({
-      type: SEARCH,
-      payload: {
-        isSearching: false,
-        showResults: true,
-        error: serializeErrors(err),
-        results: []
-      }
-    });
+    const error = serializeErrors(err);
+
+    if (error) {
+      dispatch({
+        type: SEARCH,
+        payload: {
+          isSearching: false,
+          showResults: true,
+          error,
+          results: []
+        }
+      });
+
+      return;
+    }
 
     throw err;
   }
@@ -46,5 +52,14 @@ export const resetSearch = () => (dispatch) => {
   dispatch({
     type: SEARCH_RESET,
     payload: {}
+  });
+};
+
+export const setQuery = (query) => (dispatch) => {
+  dispatch({
+    type: SEARCH_SET_QUERY,
+    payload: {
+      query
+    }
   });
 };
