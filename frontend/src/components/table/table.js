@@ -25,8 +25,8 @@ const Table = (props) => {
   };
 
   return props.weatherState.table.entries.length !== 0 ? (
-    <div className="table-wrapper">
-      <table>
+    <div data-testid="table-wrapper" className="table-wrapper">
+      <table data-testid="table">
         <thead>
           <tr>
             <th onClick={() => handleTableSort('name')}>

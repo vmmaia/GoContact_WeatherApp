@@ -2,7 +2,7 @@ import './spinner.css';
 
 const Spinner = (props) => {
   return (
-    <div className="spinner-wrapper">
+    <div className="spinner-wrapper" data-testid="spinner-wrapper">
       <i className="fa fa-spinner" aria-hidden="true"></i>
       <span>Searching</span>
     </div>

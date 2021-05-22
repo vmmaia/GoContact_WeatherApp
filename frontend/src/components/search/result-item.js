@@ -5,6 +5,7 @@ import './search.css';
 const ResultItem = (props) => {
   return (
     <div
+      data-testid="search-result-item"
       className="search-result-item"
       onClick={() =>
         props.retrieveCity(`${props.result.name}, ${props.result.details}`)

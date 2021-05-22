@@ -5,7 +5,7 @@ import './search.css';
 
 const ResultList = (props) => {
   return (
-    <div className="search-result-list">
+    <div data-testid="search-result-list" className="search-result-list">
       {props.searchState.isSearching ? (
         <Spinner />
       ) : props.searchState.error !== '' ? (

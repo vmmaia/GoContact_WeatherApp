@@ -1,3 +1,4 @@
+import axios from 'axios';
 import {
   RETRIEVE_CITY,
   SEARCH_RESET,
@@ -5,11 +6,11 @@ import {
   TABLE_SORT_BY
 } from './action-types';
 import serializeErrors from '../../util/serialize-errors';
-import backend from '../../apis/backend';
+import backendURL from '../../backendURL';
 
 export const retrieveCity = (query) => async (dispatch) => {
   try {
-    const response = await backend.post('/current', { query });
+    const response = await axios.post(`${backendURL}/current`, { query });
 
     dispatch({
       type: RETRIEVE_CITY,

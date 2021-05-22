@@ -1,12 +1,11 @@
 import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, Redirect } from 'react-router-dom';
 
 import './app.css';
 
 import Footer from '../footer/Footer';
 
 import LandingPage from '../../pages/landing/Landing';
-import AboutPage from '../../pages/about/About';
 import PageNotFound from '../../pages/pageNotFound/PageNotFound';
 
 const App = (props) => {
@@ -15,8 +14,8 @@ const App = (props) => {
       <div className="page-wrapper">
         <Switch>
           <Route exact path="/" component={LandingPage} />
-          <Route exact path="/about" component={AboutPage} />
-          <Route component={PageNotFound} />
+          <Route exact path="/404" component={PageNotFound} />
+          <Redirect from="*" to="/404" />
         </Switch>
       </div>
       <Footer />

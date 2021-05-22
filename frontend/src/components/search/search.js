@@ -14,12 +14,16 @@ const Search = (props) => {
   const handleSearchItem = (event) => {
     const value = event.target.value;
 
-    if (value === '') {
-      props.resetSearch();
+    props.setQuery(value);
+
+    if (value.length <= 3) {
       return;
     }
 
-    props.setQuery(value);
+    if (value.length === 0 || value === '') {
+      props.resetSearch();
+      return;
+    }
 
     searchCounter++;
     const counter = searchCounter;
@@ -37,11 +41,13 @@ const Search = (props) => {
 
   return (
     <div
+      data-testid="search-wrapper"
       className={`search-wrapper ${
         props.searchState.showResults ? 'search-wrapper-with-results' : ''
       }`}
     >
       <input
+        data-testid="search-input"
         className="search-input"
         type="text"
         placeholder="Find the weather in your city"

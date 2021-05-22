@@ -1,6 +1,7 @@
+import axios from 'axios';
 import { SEARCH, SEARCH_RESET, SEARCH_SET_QUERY } from './action-types';
 import serializeErrors from '../../util/serialize-errors';
-import backend from '../../apis/backend';
+import backendURL from '../../backendURL';
 
 export const search = (query) => async (dispatch) => {
   dispatch({
@@ -14,7 +15,7 @@ export const search = (query) => async (dispatch) => {
   });
 
   try {
-    const response = await backend.post('/search', {
+    const response = await axios.post(`${backendURL}/search`, {
       query
     });
 

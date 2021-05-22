@@ -25,6 +25,7 @@ const Card = (props) => {
 
   return (
     <div
+      data-testid={'weather-card-wrapper'}
       className={`weather-card ${
         props.city.is_day === 1 ? 'weather-card-day' : 'weather-card-night'
       }`}

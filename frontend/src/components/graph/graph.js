@@ -20,7 +20,7 @@ const Graph = (props) => {
   };
 
   return (
-    <div className="graph-wrapper">
+    <div data-testid="graph-wrapper" className="graph-wrapper">
       {props.weatherState.cities.length !== 0 ? (
         <Chart series={series} options={options} type="bar" height="250px" />
       ) : (
