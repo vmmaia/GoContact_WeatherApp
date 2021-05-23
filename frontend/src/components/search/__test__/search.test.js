@@ -4,11 +4,11 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import ReduxMockStore from 'redux-mock-store';
 import Search from '../search';
-import {
-  SEARCH,
-  SEARCH_SET_QUERY,
-  SEARCH_RESET
-} from '../../../redux/actions/action-types';
+import { SEARCH, SEARCH_SET_QUERY } from '../../../redux/actions/action-types';
+import axios from 'axios';
+import mockSearchResult from '../../../test/mock-search-result';
+
+jest.mock('axios');
 
 describe('Result-item component tests', () => {
   it('Does not render results if showResults is false', () => {
@@ -62,6 +62,14 @@ describe('Result-item component tests', () => {
         showResults: false
       }
     });
+
+    const response = {
+      data: {
+        results: [mockSearchResult({}), mockSearchResult({})]
+      }
+    };
+
+    axios.post.mockImplementation(() => Promise.resolve(response));
 
     const component = render(
       <Provider store={store}>
