@@ -14,7 +14,7 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case SEARCH:
+    case SEARCH: {
       return {
         ...state,
         isSearching: action.payload.isSearching,
@@ -22,15 +22,19 @@ const reducer = (state = initialState, action) => {
         error: action.payload.error,
         results: [...action.payload.results]
       };
+    }
 
-    case SEARCH_SET_QUERY:
+    case SEARCH_SET_QUERY: {
       return { ...state, query: action.payload.query };
+    }
 
-    case SEARCH_RESET:
+    case SEARCH_RESET: {
       return { ...initialState };
+    }
 
-    default:
+    default: {
       return { ...state };
+    }
   }
 };
 
