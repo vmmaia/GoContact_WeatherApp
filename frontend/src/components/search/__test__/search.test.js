@@ -24,6 +24,7 @@ describe('Result-item component tests', () => {
     const mockStore = ReduxMockStore([thunk]);
     const store = mockStore({
       search: {
+        query: '',
         showResults: false
       }
     });
@@ -46,6 +47,7 @@ describe('Result-item component tests', () => {
     const mockStore = ReduxMockStore([thunk]);
     const store = mockStore({
       search: {
+        query: '',
         showResults: true
       }
     });
@@ -68,6 +70,7 @@ describe('Result-item component tests', () => {
     const mockStore = ReduxMockStore([thunk]);
     const store = mockStore({
       search: {
+        query: 'Aveiro',
         showResults: false
       }
     });

@@ -17,7 +17,9 @@ const Search = (props) => {
       clearTimeout(searchTimer);
     }
 
-    if (props.searchState.query && props.searchState.query.length <= 3) return;
+    if (props.searchState.query.length === 0) {
+      return;
+    }
 
     searchTimer = setTimeout(() => {
       props.search(props.searchState.query);
