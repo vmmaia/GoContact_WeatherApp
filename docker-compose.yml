@@ -1,0 +1,28 @@
+version: '3'
+
+services:
+  gc_backend:
+    build: ./backend
+    image: gc_vm_backend:latest
+    restart: always
+    ports:
+      - '5000:5000'
+    networks:
+      - gc_vm_network
+
+  gc_frontend:
+    build: ./frontend
+    image: gc_vm_frontend:latest
+    restart: always
+    environment:
+      - BACKEND_URL="gc_backend:5000"
+    ports:
+      - '80:80'
+    networks:
+      - gc_vm_network
+    depends_on:
+      - gc_backend
+
+networks:
+  gc_vm_network:
+    driver: bridge
