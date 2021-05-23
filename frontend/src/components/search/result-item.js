@@ -7,9 +7,9 @@ const ResultItem = (props) => {
     <div
       data-testid="search-result-item"
       className="search-result-item"
-      onClick={() =>
-        props.retrieveCity(`${props.result.name}, ${props.result.details}`)
-      }
+      onClick={() => {
+        props.retrieveCity(`${props.result.name}, ${props.result.details}`);
+      }}
     >
       <i className="fa fa-map-marker" aria-hidden="true"></i>
       <div className="search-results-details-wrapper">

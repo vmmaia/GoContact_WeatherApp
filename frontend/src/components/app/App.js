@@ -8,7 +8,7 @@ import Footer from '../footer/Footer';
 import LandingPage from '../../pages/landing/Landing';
 import PageNotFound from '../../pages/pageNotFound/PageNotFound';
 
-const App = (props) => {
+const App = () => {
   return (
     <>
       <div className="page-wrapper">

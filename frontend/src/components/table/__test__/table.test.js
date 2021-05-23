@@ -5,9 +5,22 @@ import thunk from 'redux-thunk';
 import ReduxMockStore from 'redux-mock-store';
 import mockCity from '../../../test/mock-city';
 import Table from '../table';
-import { TABLE_SORT_BY } from '../../../redux/actions/action-types';
+
+const mockSortTableFunction = jest.fn();
+
+jest.mock('../../../redux/actions/weather-actions', () => {
+  const module = jest.requireActual('../../../redux/actions/weather-actions');
+  return {
+    ...module,
+    sortTable: (query) => mockSortTableFunction
+  };
+});
 
 describe('Table component tests', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Does not render if there are no cities', () => {
     const mockStore = ReduxMockStore();
     const store = mockStore({
@@ -67,15 +80,13 @@ describe('Table component tests', () => {
     expect(tableEntry.children[4].innerHTML).toBe(city.sunset);
   });
 
-  it('Sorts by name column', (done) => {
+  it('Sorts by name column', () => {
     const mockStore = ReduxMockStore([thunk]);
     const cities = [mockCity({})];
 
     const store = mockStore({
       weather: {
         table: {
-          sortBy: 'name',
-          order: 'desc',
           entries: cities
         }
       }
@@ -92,29 +103,16 @@ describe('Table component tests', () => {
 
     fireEvent.click(nameHeader);
 
-    setTimeout(() => {
-      const actionCalls = store.getActions();
-
-      expect(
-        actionCalls.find(
-          (action) =>
-            action.type === TABLE_SORT_BY && action.payload.column === 'name'
-        )
-      );
-
-      done();
-    }, 500);
+    expect(mockSortTableFunction).toHaveBeenCalledTimes(1);
   });
 
-  it('Sorts by location column', (done) => {
+  it('Sorts by details column', () => {
     const mockStore = ReduxMockStore([thunk]);
     const cities = [mockCity({})];
 
     const store = mockStore({
       weather: {
         table: {
-          sortBy: 'location',
-          order: 'desc',
           entries: cities
         }
       }
@@ -127,34 +125,20 @@ describe('Table component tests', () => {
     );
 
     const table = component.queryByTestId('table');
-    const nameHeader = table.children[0].children[0].children[0];
+    const detailsHeader = table.children[0].children[0].children[1];
 
-    fireEvent.click(nameHeader);
+    fireEvent.click(detailsHeader);
 
-    setTimeout(() => {
-      const actionCalls = store.getActions();
-
-      expect(
-        actionCalls.find(
-          (action) =>
-            action.type === TABLE_SORT_BY &&
-            action.payload.column === 'location'
-        )
-      );
-
-      done();
-    }, 500);
+    expect(mockSortTableFunction).toHaveBeenCalledTimes(1);
   });
 
-  it('Sorts by temperature column', (done) => {
+  it('Sorts by temperature column', () => {
     const mockStore = ReduxMockStore([thunk]);
     const cities = [mockCity({})];
 
     const store = mockStore({
       weather: {
         table: {
-          sortBy: 'temperature',
-          order: 'desc',
           entries: cities
         }
       }
@@ -167,34 +151,20 @@ describe('Table component tests', () => {
     );
 
     const table = component.queryByTestId('table');
-    const nameHeader = table.children[0].children[0].children[0];
+    const temperatureHeader = table.children[0].children[0].children[2];
 
-    fireEvent.click(nameHeader);
+    fireEvent.click(temperatureHeader);
 
-    setTimeout(() => {
-      const actionCalls = store.getActions();
-
-      expect(
-        actionCalls.find(
-          (action) =>
-            action.type === TABLE_SORT_BY &&
-            action.payload.column === 'temperature'
-        )
-      );
-
-      done();
-    }, 500);
+    expect(mockSortTableFunction).toHaveBeenCalledTimes(1);
   });
 
-  it('Sorts by sunrise column', (done) => {
+  it('Sorts by sunrise column', () => {
     const mockStore = ReduxMockStore([thunk]);
     const cities = [mockCity({})];
 
     const store = mockStore({
       weather: {
         table: {
-          sortBy: 'sunrise',
-          order: 'desc',
           entries: cities
         }
       }
@@ -207,33 +177,20 @@ describe('Table component tests', () => {
     );
 
     const table = component.queryByTestId('table');
-    const nameHeader = table.children[0].children[0].children[0];
+    const sunriseHeader = table.children[0].children[0].children[3];
 
-    fireEvent.click(nameHeader);
+    fireEvent.click(sunriseHeader);
 
-    setTimeout(() => {
-      const actionCalls = store.getActions();
-
-      expect(
-        actionCalls.find(
-          (action) =>
-            action.type === TABLE_SORT_BY && action.payload.column === 'sunrise'
-        )
-      );
-
-      done();
-    }, 500);
+    expect(mockSortTableFunction).toHaveBeenCalledTimes(1);
   });
 
-  it('Sorts by sunset column', (done) => {
+  it('Sorts by sunset column', () => {
     const mockStore = ReduxMockStore([thunk]);
     const cities = [mockCity({})];
 
     const store = mockStore({
       weather: {
         table: {
-          sortBy: 'sunset',
-          order: 'desc',
           entries: cities
         }
       }
@@ -246,21 +203,10 @@ describe('Table component tests', () => {
     );
 
     const table = component.queryByTestId('table');
-    const nameHeader = table.children[0].children[0].children[0];
+    const sunsetHeader = table.children[0].children[0].children[4];
 
-    fireEvent.click(nameHeader);
+    fireEvent.click(sunsetHeader);
 
-    setTimeout(() => {
-      const actionCalls = store.getActions();
-
-      expect(
-        actionCalls.find(
-          (action) =>
-            action.type === TABLE_SORT_BY && action.payload.column === 'sunset'
-        )
-      );
-
-      done();
-    }, 500);
+    expect(mockSortTableFunction).toHaveBeenCalledTimes(1);
   });
 });

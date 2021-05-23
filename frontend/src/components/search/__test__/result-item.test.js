@@ -4,14 +4,24 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import ReduxMockStore from 'redux-mock-store';
 import ResultItem from '../result-item';
-import { RETRIEVE_CITY } from '../../../redux/actions/action-types';
 import mockSearchResult from '../../../test/mock-search-result';
 import mockCity from '../../../test/mock-city';
-import axios from 'axios';
 
-jest.mock('axios');
+const mockRetrieveCityFunction = jest.fn();
+
+jest.mock('../../../redux/actions/weather-actions', () => {
+  const module = jest.requireActual('../../../redux/actions/weather-actions');
+  return {
+    ...module,
+    retrieveCity: (query) => mockRetrieveCityFunction
+  };
+});
 
 describe('Result-item component tests', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Renders correctly search result', () => {
     const mockStore = ReduxMockStore();
     const store = mockStore({});
@@ -30,15 +40,9 @@ describe('Result-item component tests', () => {
     expect(component.getByText(mockResult.details)).toBeTruthy();
   });
 
-  it('Searches for city when clicked', (done) => {
+  it('Searches for city when clicked', () => {
     const mockStore = ReduxMockStore([thunk]);
     const store = mockStore({});
-
-    const response = {
-      data: mockCity({})
-    };
-
-    axios.post.mockImplementation(() => Promise.resolve(response));
 
     const component = render(
       <Provider store={store}>
@@ -50,13 +54,6 @@ describe('Result-item component tests', () => {
 
     fireEvent.click(wrapper, {});
 
-    setTimeout(() => {
-      const actionCalls = store.getActions();
-
-      expect(
-        actionCalls.find((action) => action.type === RETRIEVE_CITY)
-      ).toBeTruthy();
-      done();
-    }, 4000);
+    expect(mockRetrieveCityFunction).toHaveBeenCalledTimes(1);
   });
 });

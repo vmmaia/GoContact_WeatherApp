@@ -1,4 +1,5 @@
 import ResultList from './result-list';
+import { useEffect } from 'react';
 import { connect } from 'react-redux';
 import {
   search,
@@ -8,30 +9,28 @@ import {
 
 import './search.css';
 
-let searchCounter = 0;
+let searchTimer;
 
 const Search = (props) => {
+  useEffect(() => {
+    if (searchTimer) {
+      clearTimeout(searchTimer);
+    }
+
+    if (props.searchState.query && props.searchState.query.length <= 3) return;
+
+    searchTimer = setTimeout(() => {
+      props.search(props.searchState.query);
+    }, 750);
+  }, [props.searchState.query]);
+
   const handleSearchItem = (event) => {
     const value = event.target.value;
 
     props.setQuery(value);
 
-    if (!value || value.length === 0) {
+    if (value.length === 0) {
       props.resetSearch();
-      return;
-    }
-
-    searchCounter++;
-    const counter = searchCounter;
-
-    setTimeout(() => {
-      searchItem(counter, value);
-    }, 750);
-  };
-
-  const searchItem = (counter, value) => {
-    if (counter === searchCounter) {
-      props.search(value);
     }
   };
 
@@ -49,7 +48,7 @@ const Search = (props) => {
         placeholder="Find the weather in your city"
         onChange={handleSearchItem}
         onKeyUp={(e) => {
-          if (e.keyCode === 27) {
+          if (e.code === 'Escape') {
             props.resetSearch();
           }
         }}

@@ -1,6 +1,6 @@
 import './spinner.css';
 
-const Spinner = (props) => {
+const Spinner = () => {
   return (
     <div className="spinner-wrapper" data-testid="spinner-wrapper">
       <i className="fa fa-spinner" aria-hidden="true"></i>

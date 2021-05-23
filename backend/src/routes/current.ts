@@ -29,10 +29,13 @@ router.post(
     }&dt=${getFormattedDate()}`;
 
     try {
-      const [responseCurrent, responseAstro] = await axios.all([
+      const responses = await axios.all([
         axios.get(currentURL),
         axios.get(astronomyURL)
       ]);
+
+      const responseCurrent = responses[0];
+      const responseAstro = responses[1];
 
       const currentData: CurrentResponseFormat = responseCurrent.data;
       const astroData: AstroResponseFormat = responseAstro.data;
@@ -59,8 +62,16 @@ router.post(
 
       res.send(response);
     } catch (error) {
-      if (error.response && error.response.status !== 200) throw new APIError();
-      throw new Error(error);
+      if (error.response && error.response.status !== 200) {
+        if (
+          error.response.data &&
+          error.response.data.error &&
+          error.response.data.error.message
+        ) {
+          throw new APIError(error.response.data.error.message);
+        }
+      }
+      throw error;
     }
   }
 );

@@ -46,15 +46,15 @@ th:hover {
 }
 
 th:hover > .table-selected-icon-invisible {
-  opacity: 50%;
+  color: #777;
 }
 
 .table-selected-icon-visible {
-  opacity: 100%;
+  color: #000;
 }
 
 .table-selected-icon-invisible {
-  opacity: 0%;
+  color: #fff;
 }
 
 @media screen and (max-width: 1024px) {

@@ -40,8 +40,16 @@ router.post(
 
       res.send(response);
     } catch (error) {
-      if (error.response && error.response.status !== 200) throw new APIError();
-      throw new Error(error);
+      if (error.response && error.response.status !== 200) {
+        if (
+          error.response.data &&
+          error.response.data.error &&
+          error.response.data.error.message
+        ) {
+          throw new APIError(error.response.data.error.message);
+        }
+      }
+      throw error;
     }
   }
 );

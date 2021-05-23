@@ -1,16 +1,25 @@
 import React from 'react';
-import { render, fireEvent } from '@testing-library/react';
+import { render, fireEvent, waitFor } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import ReduxMockStore from 'redux-mock-store';
 import Search from '../search';
-import { SEARCH, SEARCH_SET_QUERY } from '../../../redux/actions/action-types';
-import axios from 'axios';
-import mockSearchResult from '../../../test/mock-search-result';
 
-jest.mock('axios');
+const mockSearchFunction = jest.fn();
+
+jest.mock('../../../redux/actions/search-actions', () => {
+  const module = jest.requireActual('../../../redux/actions/search-actions');
+  return {
+    ...module,
+    search: (query) => mockSearchFunction
+  };
+});
 
 describe('Result-item component tests', () => {
+  afterEach(() => {
+    jest.clearAllMocks();
+  });
+
   it('Does not render results if showResults is false', () => {
     const mockStore = ReduxMockStore([thunk]);
     const store = mockStore({
@@ -55,21 +64,13 @@ describe('Result-item component tests', () => {
     expect(component.queryByTestId('search-result-list')).toBeTruthy();
   });
 
-  it('Searches for a place given a query', (done) => {
+  it('Searches for a place given a query', async () => {
     const mockStore = ReduxMockStore([thunk]);
     const store = mockStore({
       search: {
         showResults: false
       }
     });
-
-    const response = {
-      data: {
-        results: [mockSearchResult({}), mockSearchResult({})]
-      }
-    };
-
-    axios.post.mockImplementation(() => Promise.resolve(response));
 
     const component = render(
       <Provider store={store}>
@@ -82,32 +83,8 @@ describe('Result-item component tests', () => {
 
     fireEvent.change(input, { target: { value: searchQuery } });
 
-    setTimeout(() => {
-      const actionCalls = store.getActions();
-
-      expect(
-        actionCalls.find(
-          (action) =>
-            action.type === SEARCH_SET_QUERY &&
-            action.payload.query === searchQuery
-        )
-      ).toBeTruthy();
-
-      expect(
-        actionCalls.find(
-          (action) =>
-            action.type === SEARCH && action.payload.isSearching === true
-        )
-      ).toBeTruthy();
-
-      expect(
-        actionCalls.find(
-          (action) =>
-            action.type === SEARCH && action.payload.isSearching === false
-        )
-      ).toBeTruthy();
-
-      done();
-    }, 4000);
+    await waitFor(() => {
+      expect(mockSearchFunction).toHaveBeenCalledTimes(1);
+    });
   });
 });

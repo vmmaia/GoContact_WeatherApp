@@ -1,7 +1,7 @@
 import { app } from './app';
 import { server_port } from './config.json';
 
-const start = async () => {
+const start = () => {
   const SERVER_PORT = process.env.SERVER_PORT || server_port;
 
   app.listen(SERVER_PORT, () =>

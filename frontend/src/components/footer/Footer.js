@@ -1,6 +1,6 @@
 import './footer.css';
 
-const Footer = (props) => {
+const Footer = () => {
   return (
     <div className="page-footer">
       <div>{'Desafio técnico - GoContact - Vasco Maia - Maio 2021'}</div>
