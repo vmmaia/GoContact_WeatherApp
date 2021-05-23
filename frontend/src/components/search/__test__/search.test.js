@@ -102,34 +102,4 @@ describe('Result-item component tests', () => {
       done();
     }, 4000);
   });
-
-  it('Resets the state when given a <= 3 char long query', (done) => {
-    const mockStore = ReduxMockStore([thunk]);
-    const store = mockStore({
-      search: {
-        showResults: false
-      }
-    });
-
-    const component = render(
-      <Provider store={store}>
-        <Search />
-      </Provider>
-    );
-
-    const input = component.queryByTestId('search-input');
-    const searchQuery = 'aaa';
-
-    fireEvent.change(input, { target: { value: searchQuery } });
-
-    setTimeout(() => {
-      const actionCalls = store.getActions();
-
-      expect(
-        actionCalls.find((action) => action.type === SEARCH_RESET)
-      ).toBeTruthy();
-
-      done();
-    }, 4000);
-  });
 });

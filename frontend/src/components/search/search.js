@@ -16,11 +16,7 @@ const Search = (props) => {
 
     props.setQuery(value);
 
-    if (value.length <= 3) {
-      return;
-    }
-
-    if (value.length === 0 || value === '') {
+    if (!value || value.length === 0) {
       props.resetSearch();
       return;
     }
@@ -52,6 +48,11 @@ const Search = (props) => {
         type="text"
         placeholder="Find the weather in your city"
         onChange={handleSearchItem}
+        onKeyUp={(e) => {
+          if (e.keyCode === 27) {
+            props.resetSearch();
+          }
+        }}
         value={props.searchState.query}
       />
       <i className="fa fa-search search-icon" aria-hidden="true"></i>
